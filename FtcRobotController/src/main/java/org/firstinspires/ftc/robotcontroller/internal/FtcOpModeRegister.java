@@ -37,9 +37,16 @@ import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 import com.qualcomm.robotcore.eventloop.opmode.AnnotatedOpModeRegistrar;
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptNullOp;
 import org.firstinspires.ftc.robotcontroller.external.samples.PushbotTeleopPOV_Linear;
+//import org.firstinspires.ftc.robotcontroller.internal.OpsModes.Auto;
+import org.firstinspires.ftc.robotcontroller.internal.OpsModes.Auto_C_B;
+//import org.firstinspires.ftc.robotcontroller.internal.OpsModes.Drive;
+import org.firstinspires.ftc.robotcontroller.internal.OpsModes.Auto_C_R;
+import org.firstinspires.ftc.robotcontroller.internal.OpsModes.Auto_R_B;
+import org.firstinspires.ftc.robotcontroller.internal.OpsModes.Auto_R_R;
 import org.firstinspires.ftc.robotcontroller.internal.OpsModes.JacensTestHardwarePushbotTeravoltz;
 import org.firstinspires.ftc.robotcontroller.internal.OpsModes.TeraVoltzTestOpMode;
 import org.firstinspires.ftc.robotcontroller.internal.OpsModes.TeravoltzAutoDriveByTime_Linear;
+//import org.firstinspires.ftc.robotcontroller.internal.OpsModes.TeravoltzAutonomous;
 
 /**
  * {@link FtcOpModeRegister} is responsible for registering opmodes for use in an FTC game.
@@ -83,7 +90,9 @@ public class FtcOpModeRegister implements OpModeRegister {
          */
 
         manager.register("TeraVoltzDriveV2", TeraVoltzTestOpMode.class);
-        manager.register("PushbotTeleopPOV_Linear", PushbotTeleopPOV_Linear.class);
-        manager.register("TeravoltzAutoDriveByTime_Linear", TeravoltzAutoDriveByTime_Linear.class);
+        manager.register("AutoCB", Auto_C_B.class);
+        manager.register("AutoRB", Auto_R_B.class);
+        manager.register("AutoCR", Auto_C_R.class);
+        manager.register("AutoRR", Auto_R_R.class);
     }
 }

@@ -117,12 +117,12 @@ public class TeravoltzAutoDriveByTime_Linear extends LinearOpMode {
             telemetry.update();
         }
 
+        // Step 4:  Stop and close the claw.
+        robot.leftMotor.setPower(0);
+        robot.rightMotor.setPower(0);
+
         telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);
     }
 }
-//notes for our autonomous period
-//go to a pre-determined position and shoot the ball into the center vortex then drive back to original position
-//drive where we need to be to hit off yoga ball turn right then hit it off then turn left to normal position and then do it again program to make sure it turns twice to ensure ball is hit off increment then go back to starting position
-//finally drive onto the center vortex stand and stay for duration of time

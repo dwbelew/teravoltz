@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.robotcontroller.internal.OpsModes;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -31,6 +32,8 @@ public class HardwarePushbotTeravoltz
     public DcMotor  elevator    = null;
     public DcMotor  leftShooter    = null;
     public DcMotor  rightShooter    = null;
+    public CRServo arm    = null;
+    public Servo    kicker    = null;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -79,6 +82,8 @@ public class HardwarePushbotTeravoltz
         elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
+        kicker  = hwMap.servo.get("kicker");
+        arm     = hwMap.crservo.get("arm");
     }
 
     /***
