@@ -68,14 +68,14 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
         double max;
         double KICKER_MAX_ANGLE = 0.5;
         double KICKER_MIN_ANGLE = 0;
-        boolean CB = false;
-        boolean EB = false;
+        boolean rightbumper = false;
+        boolean leftbumper = false;
         boolean collectorOn = false;
         boolean elevatorOn = false;
         double shooterPower = 0;
         int activeCount = 0;
-        boolean RightBumper;
-        boolean rightBumper;
+        boolean lefttrigger;
+        boolean righttrigger;
         int lastCyclerightBumper = 0;
         int lastCycleRightBumper = 0;
         boolean a;
@@ -85,6 +85,8 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
         boolean k;
         boolean c;
         boolean d;
+        boolean stop;
+        boolean open;
         boolean start;
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
@@ -105,10 +107,10 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
 
             // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
-            left  = -gamepad1.left_stick_y + gamepad1.right_stick_x;
-            right = gamepad1.left_stick_y - gamepad1.right_stick_x;
-            rightBumper = 0 < gamepad2.left_trigger;
-            RightBumper = 0 < gamepad2.right_trigger;
+            left  = -gamepad1.left_stick_y;
+            right = -gamepad1.right_stick_y;
+            righttrigger = 0 < gamepad2.right_trigger;
+            lefttrigger = 0 < gamepad2.left_trigger;
             a = gamepad2.a;
             b = gamepad2.b;
             x = gamepad1.x;
@@ -116,9 +118,11 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
             k = gamepad2.x;
             c = gamepad1.a;
             d = gamepad1.b;
-            EB = gamepad2.left_bumper;
-            CB = gamepad2.right_bumper;
-
+            leftbumper = gamepad2.left_bumper;
+            rightbumper = gamepad2.right_bumper;
+            open = gamepad1.right_bumper;
+            stop = gamepad1.left_bumper;
+/*
             // Normalize the values so neither exceed +/- 1.0
             max = Math.max(Math.abs(left), Math.abs(right));
             if (max > 1.0)
@@ -126,10 +130,11 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
                 left /= max;
                 right /= max;
             }
-
+*/
             robot.leftMotor.setPower(left);
             robot.rightMotor.setPower(right);
-            if (rightBumper && lastCyclerightBumper > 10) {
+
+            if (rightbumper && lastCyclerightBumper > 10) {
                 lastCycleRightBumper = 0;
                 collectorOn = !collectorOn;
                 if (collectorOn)
@@ -137,14 +142,14 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
                 else
                     robot.ballCollector.setPower(0);
             }
-            else if (CB) {
+            else if (righttrigger) {
                 robot.ballCollector.setPower(-1);
             }
             else {
                 lastCyclerightBumper++;
             }
 
-            if (RightBumper && lastCycleRightBumper > 10) {
+            if (leftbumper && lastCycleRightBumper > 10) {
                 lastCycleRightBumper = 0;
                 elevatorOn = !elevatorOn;
                 if (elevatorOn)
@@ -152,12 +157,13 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
                 else
                     robot.elevator.setPower(0);
             }
-            else if (EB) {
+            else if (lefttrigger) {
                 robot.elevator.setPower(-1);
             }
             else {
                 lastCycleRightBumper++;
             }
+
             // a is pressed and shooter power less than 100%
             // add 20% to shooter power
             if (a) {
@@ -177,7 +183,40 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
                 robot.leftShooter.setPower(shooterPower);
             }
 
+            if(x) {
+                robot.capBallLifter.setPower(1);
+                telemetry.addData("Cap ball lifter:", "Extending");
+            }
+
+            // Cap ball lifter
+            else if (y) {
+                robot.capBallLifter.setPower(-1);
+                telemetry.addData("Cap ball lifter:", "Lowering");
+            }
+
+            else {
+                robot.capBallLifter.setPower(0);
+                telemetry.addData("Cap ball lifter:", "Stopped");
+            }
+
+
             //x is pressed and shooter extends or contracts
+
+            if (open) {
+                double f = robot.stopper.getPosition();
+                if (f > 0) {
+                    robot.stopper.setPosition(f - 0.05);
+                }
+                    telemetry.addData("Catch = ", f);
+            }
+
+            if (stop) {
+                double f = robot.stopper.getPosition();
+                if (f < 1) {
+                    robot.stopper.setPosition(f + 0.05);
+                }
+                telemetry.addData("Catch = ", f);
+            }
 
             //
             if(k) {
@@ -186,7 +225,7 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
             }
             else{
                 robot.kicker.setPosition(KICKER_MIN_ANGLE);
-                telemetry.addData("Kicker", "Lowered");
+                //telemetry.addData("Kicker", "Lowered");
             }
 
             //Button arm
@@ -209,6 +248,7 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
             telemetry.addData("left_stick",  "%.2f", left);
             telemetry.addData("right_stick", "%.2f", right);
             telemetry.addData("shooterPower", "%.2f", shooterPower);
+            telemetry.addData("Catch", "%.2f");
             telemetry.update();
 
             // Pause for metronome tick.  40 mS each cycle = update 25 times a second.

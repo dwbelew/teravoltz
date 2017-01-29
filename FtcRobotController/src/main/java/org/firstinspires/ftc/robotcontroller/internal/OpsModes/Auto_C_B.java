@@ -79,10 +79,10 @@ public class Auto_C_B extends LinearOpMode {
     double DRIVE_BACKWARD = -DRIVE_FORWARD;
     double DRIVE_STOP = 0;
 
-    double ELEVATOR_ON = 1;
+    double ELEVATOR_ON = -1;
     double ELEVATOR_OFF = 0;
 
-    double SHOOTER_ON = 0.9;
+    double SHOOTER_ON = 0.92;
     double SHOOTER_OFF = 0;
 
     double KICKER_RAISED_POSITION = 0.5;
@@ -95,19 +95,20 @@ public class Auto_C_B extends LinearOpMode {
     double reset = 0;
 
     //TIME/DELAY Variables
-    long ONE_DISTANCE = 0;        // Step 1
+    long ONE_DISTANCE = 2350;
+            ;        // Step 1
     long TURN_ONE;
     // Step 2
-    long TWO_DISTANCE = 0;        // Step 3
+    long TWO_DISTANCE = 1200;        // Step 3
     //long THREE_DISTANCE;      // Step 9
 
     long ELEVATOR_TIME = 5000;       // Step 5
     long KICKER_TIME = 2000;         // Steps 6 & 7
-    long ARM_MOVEMENT_TIME = 2500;
+    long ARM_MOVEMENT_TIME;
     long SHOOTER_TIME = 1000;
     // Steps 8 & 10
 
-    long MSPIN = 434058935 * (10^-8);    // time in millseconds to travel one inch
+    //long MSPIN = 434058935 * (10^-8);    // time in millseconds to travel one inch
     long STEP_VIEW_PAUSE = 500;  // time alloted for viewing of step
 
     @Override
@@ -163,7 +164,8 @@ public class Auto_C_B extends LinearOpMode {
         telemetry.update();
         robot.leftMotor.setPower(DRIVE_FORWARD);
         robot.rightMotor.setPower(DRIVE_FORWARD);
-        sleep(ONE_DISTANCE * MSPIN);
+
+        sleep(ONE_DISTANCE);
 
         // Step 2:  Stop wheels
         telemetry.addData("STEP 2", "Stopped driving");
@@ -185,6 +187,7 @@ public class Auto_C_B extends LinearOpMode {
         robot.kicker.setPosition(KICKER_RAISED_POSITION);
         sleep(KICKER_TIME);
         robot.kicker.setPosition(KICKER_LOWERED_POSITION);
+        robot.arm.setPower(ARM_STILL);
         sleep(KICKER_TIME);
 
 
@@ -202,7 +205,7 @@ public class Auto_C_B extends LinearOpMode {
         robot.kicker.setPosition(KICKER_RAISED_POSITION);
         sleep(KICKER_TIME);
         robot.kicker.setPosition(KICKER_LOWERED_POSITION);
-        sleep(KICKER_TIME);
+        sleep(2 * KICKER_TIME);
 
         // Step 7: Shoot and Stop shooters and lower kicker
         telemetry.addData("STEP 7", "Stopping shooter");
@@ -212,31 +215,32 @@ public class Auto_C_B extends LinearOpMode {
         sleep(STEP_VIEW_PAUSE);
 
 
-
+/*
         // Step 8: Extend arm
         telemetry.addData("STEP 8", "Extending arm");
         telemetry.update();
-        robot.arm.setPower(ARM_EXTEND);
+
         sleep(ARM_MOVEMENT_TIME);
         robot.arm.setPower(ARM_STILL);
         sleep(STEP_VIEW_PAUSE);
-
+*/
 
         // Step 9: Knock off Ball and Park
         telemetry.addData("STEP 9", "Knocking off ball and parking");
         telemetry.update();
         robot.leftMotor.setPower(DRIVE_FORWARD);
         robot.rightMotor.setPower(DRIVE_FORWARD);
-        sleep(TWO_DISTANCE * MSPIN);
+        sleep(TWO_DISTANCE);
         robot.leftMotor.setPower(DRIVE_STOP);
         robot.rightMotor.setPower(DRIVE_STOP);
         sleep(STEP_VIEW_PAUSE);
 
         //Step 10: Retract arm
-        telemetry.addData("STEP 10", "Retracting arm");
+        telemetry.addData("STEP 10", "Extending arm");
         telemetry.update();
-        robot.arm.setPower(ARM_RETRACT);
-        sleep(ARM_MOVEMENT_TIME);
+        robot.arm.setPower(ARM_EXTEND);
+        sleep(2500);
+        robot.arm.setPower(ARM_STILL);
         sleep(STEP_VIEW_PAUSE);
 
         //Finished (11)

@@ -35,23 +35,8 @@ package org.firstinspires.ftc.robotcontroller.internal.OpsModes;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.util.RobotLog;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbotMatrix;
-
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-/*
+/**
  * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
  * All device access is managed through the HardwarePushbot class.
  * The code is structured as a LinearOpMode
@@ -64,11 +49,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
 
+
 @TeleOp(name="Pushbot: Teleop POV", group="Pushbot")
 @Disabled
-public class TeraVoltzTestOpModeREAL extends LinearOpMode {
+public class TeraVoltzTestOpMode2 extends LinearOpMode {
 
-     Declare OpMode+ members.
+    /* Declare OpMode members.
     HardwarePushbotTeravoltz robot           = new HardwarePushbotTeravoltz();   // Use a Pushbot's hardware
     String Version = "0.0.3";
 
@@ -100,10 +86,9 @@ public class TeraVoltzTestOpModeREAL extends LinearOpMode {
         boolean c;
         boolean d;
         boolean start;
-        /*Initialize the hardware variables.
+        /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
 
-        //
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
@@ -121,7 +106,7 @@ public class TeraVoltzTestOpModeREAL extends LinearOpMode {
             // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             left  = -gamepad1.left_stick_y + gamepad1.right_stick_x;
-            right = -gamepad1.left_stick_y - gamepad1.right_stick_x;
+            right = gamepad1.left_stick_y - gamepad1.right_stick_x;
             rightBumper = 0 < gamepad2.left_trigger;
             RightBumper = 0 < gamepad2.right_trigger;
             a = gamepad2.a;
@@ -192,7 +177,6 @@ public class TeraVoltzTestOpModeREAL extends LinearOpMode {
                 robot.leftShooter.setPower(shooterPower);
             }
 
-            //x is pressed and shooter extends or contracts
             if(x) {
                 robot.CapBallLifter.setPower(1);
                 telemetry.addData("Cap ball lifter:", "Extending");
@@ -209,7 +193,9 @@ public class TeraVoltzTestOpModeREAL extends LinearOpMode {
                 telemetry.addData("Cap ball lifter:", "Stopped");
             }
 
+            //x is pressed and shooter extends or contracts
 
+            //
             if(k) {
                 robot.kicker.setPosition(KICKER_MAX_ANGLE);
                 telemetry.addData("Kicker", "Raised");
