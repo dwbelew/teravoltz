@@ -77,7 +77,7 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
         boolean lefttrigger;
         boolean righttrigger;
         int lastCyclerightBumper = 0;
-        int lastCycleRightBumper = 0;
+        int lastCycleleftBumper = 0;
         boolean a;
         boolean b;
         boolean x;
@@ -135,7 +135,7 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
             robot.rightMotor.setPower(right);
 
             if (rightbumper && lastCyclerightBumper > 10) {
-                lastCycleRightBumper = 0;
+                lastCyclerightBumper = 0;
                 collectorOn = !collectorOn;
                 if (collectorOn)
                     robot.ballCollector.setPower(1);
@@ -144,13 +144,14 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
             }
             else if (righttrigger) {
                 robot.ballCollector.setPower(-1);
+                collectorOn = true;
             }
             else {
                 lastCyclerightBumper++;
             }
 
-            if (leftbumper && lastCycleRightBumper > 10) {
-                lastCycleRightBumper = 0;
+            if (leftbumper && lastCycleleftBumper > 10) {
+                lastCycleleftBumper = 0;
                 elevatorOn = !elevatorOn;
                 if (elevatorOn)
                     robot.elevator.setPower(1);
@@ -159,9 +160,10 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
             }
             else if (lefttrigger) {
                 robot.elevator.setPower(-1);
+                elevatorOn = true;
             }
             else {
-                lastCycleRightBumper++;
+                lastCycleleftBumper++;
             }
 
             // a is pressed and shooter power less than 100%

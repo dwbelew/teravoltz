@@ -95,17 +95,17 @@ public class Auto_C_B extends LinearOpMode {
     double reset = 0;
 
     //TIME/DELAY Variables
-    long ONE_DISTANCE = 2350;
+    long ONE_DISTANCE = 2000;
             ;        // Step 1
     long TURN_ONE;
     // Step 2
-    long TWO_DISTANCE = 1200;        // Step 3
+    long TWO_DISTANCE = 1500;        // Step 3
     //long THREE_DISTANCE;      // Step 9
 
     long ELEVATOR_TIME = 5000;       // Step 5
     long KICKER_TIME = 2000;         // Steps 6 & 7
     long ARM_MOVEMENT_TIME;
-    long SHOOTER_TIME = 1000;
+    long SHOOTER_TIME = 1200;
     // Steps 8 & 10
 
     //long MSPIN = 434058935 * (10^-8);    // time in millseconds to travel one inch
