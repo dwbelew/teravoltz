@@ -154,12 +154,12 @@ public class TeraVoltzTestOpMode extends LinearOpMode {
                 lastCycleleftBumper = 0;
                 elevatorOn = !elevatorOn;
                 if (elevatorOn)
-                    robot.elevator.setPower(1);
+                    robot.elevator.setPower(-1);
                 else
                     robot.elevator.setPower(0);
             }
             else if (lefttrigger) {
-                robot.elevator.setPower(-1);
+                robot.elevator.setPower(1);
                 elevatorOn = true;
             }
             else {

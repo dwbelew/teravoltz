@@ -65,7 +65,7 @@ public class HardwarePushbotTeravoltz
         elevator = hwMap.dcMotor.get("elevator");
         rightShooter = hwMap.dcMotor.get("right_shooter");
         leftShooter = hwMap.dcMotor.get("left_shooter");
-        capBallLifter = hwMap.dcMotor.get("cap_ball_lifter");
+        capBallLifter = hwMap.dcMotor.get("Cap_Ball_Lifter");
 
         leftMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
